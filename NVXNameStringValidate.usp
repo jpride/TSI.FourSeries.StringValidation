@@ -1,0 +1,69 @@
+
+/*******************************************************************************************
+  SIMPL+ Module Information
+  (Fill in comments below)
+*******************************************************************************************/
+/*
+Dealer Name:
+System Name:
+System Number:
+Programmer: jpride
+Comments:
+*/
+
+/*******************************************************************************************
+  Compiler Directives
+  (Uncomment and declare compiler directives as needed)
+*******************************************************************************************/
+// #ENABLE_DYNAMIC
+#SYMBOL_NAME "TSI - NVX Name String Validator"
+#CATEGORY "46" "#TSI Modules" // Custom
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+#OUTPUT_SHIFT 1
+
+#DEFINE_CONSTANT	MAXSTRINGS	100
+#DEFINE_CONSTANT	MAXSTRINGSIZE	64
+
+
+#HELP_BEGIN
+This module will take in up to 64 strings and output strings that have been stripped of spaces, dots, and other special characters that will cause NVX Directors will go haywire.
+The programmer can choose what these characters are replaced with or leave the default character "-". But the replacement character is pretty much limited to '-' for NVX devces
+Do not forget to place the StringValidation.clz in the associated zip into your UserPlus folder.
+
+illegal characters include but are not limited to: !,@,#,$,%,^,&,*,(,),_,+,=,?,<,>,|,[,],{,},:,;, and space " "
+#HELP_END
+   
+#USER_SIMPLSHARP_LIBRARY	"TSI.ThreeSeries.StringValidation"
+
+
+String_Input		_skip_,
+					in$[MAXSTRINGS][MAXSTRINGSIZE];
+
+String_Output 		out$[MAXSTRINGS];
+
+String_Parameter 	substitutionString[4];
+
+#BEGIN_PARAMETER_PROPERTIES substitutionString
+   propValidUnits = unitString;
+   propDefaultUnit = unitString;
+   propDefaultValue = "-";
+   propShortDescription = "Character or string to replace illegal characters";
+#END_PARAMETER_PROPERTIES
+
+
+NVXDeviceNameValidator myValidator;
+
+
+threadsafe change in$
+{
+	out$[getlastmodifiedarrayindex()] = myValidator.ValidateDeviceName(in$[getlastmodifiedarrayindex()], substitutionString);
+}
+
+function main()
+{
+	integer i;
+	waitforinitializationcomplete();
+}
+
