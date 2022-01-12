@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using Crestron.SimplSharp;                          				// For Basic SIMPL# Classes
 using System.Text.RegularExpressions;
 
@@ -10,6 +9,7 @@ namespace TSI.FourSeries.StringValidation
 
         public NVXDeviceNameValidator()
         {
+
         }
 
         /// <summary>
@@ -47,5 +47,12 @@ namespace TSI.FourSeries.StringValidation
                 return String.Empty;
             }
         }
+
+        //overloaded method that does not define the substituteString, assumes "-" and calls first method definition
+        public string ValidateDeviceName(string testString)
+        {
+            return ValidateDeviceName(testString, "-");
+        }
     }
+            
 }

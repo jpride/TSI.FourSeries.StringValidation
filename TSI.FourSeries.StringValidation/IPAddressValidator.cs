@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Crestron.SimplSharp;
 
 
@@ -19,9 +17,6 @@ namespace TSI.FourSeries.StringValidation
         /// Returns 0 when ipString is not a valid IP address, 1 when it is
         /// </summary>
         /// <param name="ipa">enter the IP address to be validated</param>
-
-  
-
         public ushort ValidateIPv4Address(string ipString)
         {
             if (String.IsNullOrWhiteSpace(ipString))
@@ -36,7 +31,7 @@ namespace TSI.FourSeries.StringValidation
             }
 
 
-            //Ternary Oparator  [condition or Bool ? value if true : value if false] **suing the "_" discarad operator in the output side of TryParse
+            //Ternary Oparator  [condition or Bool ? value if true : value if false] **using the "_" discarad operator in the output side of TryParse
             return (ushort) (System.Net.IPAddress.TryParse(ipString, out _) ? 1 : 0);
         }
 
